@@ -39,7 +39,28 @@ class Post extends Component {
 		return (
 			<div>
 				<div style={{ maxWidth: '500px' }}>
-					<h1>{this.state.post.title}</h1>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+					}}
+				>
+						<h1>{this.state.post.title}</h1>
+					{this.state.commenter &&
+						this.state.commenter === this.state.post.user && (
+							<>&nbsp;&nbsp;&nbsp;&nbsp;
+								<Link
+									to={{
+										pathname: '/edit-post',
+										state: { thisPost },
+									}}
+								>
+										<i class="far fa-edit"></i>
+								</Link>
+							</>
+						)}
+				</div>
 					<p>{new Date(this.state.post.date).toLocaleDateString()}</p>
 					<p>{this.state.post.content}</p>
 					<h4>Tags</h4>
@@ -73,22 +94,6 @@ class Post extends Component {
 						</FormGroup>
 						<Button type="submit">Add Comment</Button>
 					</Form>
-
-					{this.state.commenter &&
-						this.state.commenter === this.state.post.user && (
-							<>
-								<Link
-									to={{
-										pathname: '/edit-post',
-										state: { thisPost },
-									}}
-								>
-									<CardText>
-										<i class="far fa-edit"></i>
-									</CardText>
-								</Link>
-							</>
-						)}
 				</div>
 				{this.state.post.comments.length ? (
 					this.state.post.comments.map((el) => (
